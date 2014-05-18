@@ -49,6 +49,7 @@ module OmniAuth
 
       def player_profile_uri
         puts "[STEAM ID] #{steam_id}"
+        puts "[API KEY] #{options.api_key}"
         URI.parse("http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=#{options.api_key}&steamids=#{steam_id}")
       end
 
