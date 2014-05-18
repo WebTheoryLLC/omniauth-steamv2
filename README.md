@@ -1,4 +1,4 @@
-# Omniauth::Steamv2
+# Omniauth::SteamV2
 
 TODO: Write a gem description
 
