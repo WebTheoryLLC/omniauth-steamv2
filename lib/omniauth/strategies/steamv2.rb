@@ -7,7 +7,7 @@ module OmniAuth
       args :api_key
 
       option :api_key, nil
-      option :name, "steam"
+      option :name, "steamv2"
       option :identifier, "http://steamcommunity.com/openid"
 
       uid { steam_id }
@@ -19,8 +19,7 @@ module OmniAuth
           "location" => [player["loccityid"], player["locstatecode"], player["loccountrycode"]].compact.join(", "),
           "image"    => player["avatarmedium"],
           "urls"     => {
-            "Profile" => player["profileurl"],
-            "FriendList" => friend_list_url
+            "Profile" => player["profileurl"]
           }
         }
       end
@@ -32,15 +31,11 @@ module OmniAuth
       private
 
       def raw_info
-        # @raw_info ||=
-        puts "[MULTI JSON] #{MultiJson.decode(Net::HTTP.get(player_profile_uri))}"
-        options.api_key ? MultiJson.decode(Net::HTTP.get(player_profile_uri)) : {}
+        @raw_info ||= options.api_key ? MultiJson.decode(Net::HTTP.get(player_profile_uri)) : {}
       end
 
       def player
-        puts raw_info
-        # @player ||=
-        raw_info["response"]["players"].first
+        @player ||= raw_info["response"]["players"].first
       end
 
       def steam_id
@@ -48,8 +43,6 @@ module OmniAuth
       end
 
       def player_profile_uri
-        puts "[STEAM ID] #{steam_id}"
-        puts "[API KEY] #{options.api_key}"
         URI.parse("http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=#{options.api_key}&steamids=#{steam_id}")
       end
 
