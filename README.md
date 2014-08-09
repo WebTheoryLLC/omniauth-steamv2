@@ -1,6 +1,6 @@
 # OmniAuth::SteamV2
 
-TODO: Write a gem description
+A updated steam OmniAuth strategy
 
 ## Installation
 
